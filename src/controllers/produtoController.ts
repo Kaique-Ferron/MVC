@@ -44,7 +44,7 @@ export const updateProduto = async(req:Request, res:Response)=> {
 
 
     export const deleteProduto= 
-    async(req.Request, res:Response)=>{
+    async(req:Request, res:Response)=>{
     
     try{
         const {id} = req.params;
