@@ -71,6 +71,8 @@
 
         if (response.ok){
           alert('Produto criado com Sucesso')
+          
+
         }else{
           alert('Erro ao criar produto')
 
@@ -82,6 +84,19 @@
       }      
 
 
+    document.getElementById('fetchProductsBtn')
+    .addEventListener('click', loadProducts )
+
+    async function loadProducts(){
+      const response = await fetch('/api/Produtos')
+      const produtos = await reponse.JSON();
+
+      const tbody = document.getElementById
+      ('produtosTableBody')
+
+      tbody.innerHTML = "";
+
+    }
 
 
 
