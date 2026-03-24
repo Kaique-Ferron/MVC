@@ -65,10 +65,18 @@
       try {
         const response = await fetch('/api/produtos', {
           method: "POST",
-          headers: {'Content-type': 'application/json'}
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({nome, preco})
+        });
 
-        })
+        if (response.ok){
+          alert('Produto criado com Sucesso')
+        }else{
+          alert('Erro ao criar produto')
 
+        }
+
+        
       } catch (error) {
         alert('Erro de comunicação com o servidor')
       }      
