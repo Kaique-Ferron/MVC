@@ -1,0 +1,3 @@
+[submodule "MVC"]
+	path = MVC
+	url = https://github.com/Kaique-Ferron/MVC.git
