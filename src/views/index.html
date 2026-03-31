@@ -36,50 +36,98 @@
       <input type="number" id="updatePreco" name="updatePreco" step="0.01">
 
       <button type="submit">Atualizar Produto</button>
-  </form>
+    </form>
 
-  <!-- Lista de Produtos -->
-  <h2>Lista de Produtos</h2>
-  <button id="fetchProductsBtn">Carregar Produtos</button>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Preço</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody id="produtosTableBody">
-    </tbody>
-  </table>
+    <!-- Lista de Produtos -->
+    <h2>Lista de Produtos</h2>
+    <button id="fetchProductsBtn">Carregar Produtos</button>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="produtosTableBody">
+      </tbody>
+    </table>
 </div>
   <script>
-    document.getElementById('creteForm')
-    .addEventListener('submit', async(e)=>{ 
-      e.preventDefault()
-      
-      const nome = document.getElementById('nome').value;
-       const preco = document.getElementById('preco').value;
 
+
+   // criar produtos 
+    document.getElementById('createForm')
+    .addEventListener('submit', async(e)=>{
+     e.preventDefault();
+
+    const nome = document.getElementById('nome').value;
+    const preco = document.getElementById('preco').value;
+    
       try {
+        const response = await fetch('/api/produtos',{
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nome, preco})          
+        });
         
+        if(response.ok){
+          alert('Produto criado com sucesso!');
+          document.getElementById('createForm').reset();
+          loadProducts();
+
+        }else{
+          alert('Erro ao criar produto.')
+        }  
+
       } catch (error) {
+        alert('Erro de comunicação com o servidor.');      
         
-      }      
-
-
-
-
-
-
-
-
-
-
+      }
     })
 
+
     
+    
+
+    document.getElementById('fetchProductsBtn')
+    .addEventListener('click', loadProducts);
+
+    async function loadProducts(){
+
+      const response = await fetch('api/produtos');
+      const produtos = await response.json();
+      const tbody = document.getElementById('produtosTableBody');
+
+      tbody.innerHTML = "";
+
+      produtos.forEach( produto => { 
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${produto.id}</td>
+          <td>${produto.nome}</td>
+          <td>${produto.preco}</td>
+
+          <td> class="actions"</td>
+          <buttom onclick = "deleteProduct(
+          ${produto.id})">
+            Excluir
+          </buttom>
+        `;
+        tbody.appendChild(row);
+        
+     });
+
+     document.getElementById('updateForm')
+     .addEventListener('submit', async function (e){
+
+      e.preventDefault()
+     })
+
+    }
+
 
   </script>
 </body>

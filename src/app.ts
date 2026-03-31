@@ -4,8 +4,9 @@ import { pool } from './config/database';
 import path from "path";
 
 const app = express()
-app.use(express.static(path.join(
-    __dirname,'views' )));
+app.use(express.static(path.join(__dirname, 'views')));
+
+
 
 
 
@@ -18,8 +19,7 @@ pool.getConnection()
     .then(()=>{ 
        console.log('Conectado ao Mysql.');
        app.listen(PORT,()=>{
-        console.log(`Servidor rodando em 
-            http://localhost:${PORT}`)
+        console.log(`Servidor rodando em http://localhost:${PORT}`)
        }); 
     })
     .catch((erro: any)=>{
